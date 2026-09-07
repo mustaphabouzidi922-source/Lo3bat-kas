@@ -39,7 +39,6 @@
             transition: background 1s ease;
         }
 
-        /* شريط الهيدر العلوي */
         header {
             width: 100%;
             max-width: 500px;
@@ -110,7 +109,6 @@
             font-weight: bold;
         }
 
-        /* شريط التقدم للأخضر */
         .progress-container {
             width: 100%;
             background: rgba(255,255,255,0.15);
@@ -135,7 +133,6 @@
             color: #dcedc8;
         }
 
-        /* منطقة اللعبة الرئيسية */
         .game-container {
             flex: 1;
             width: 100%;
@@ -156,7 +153,6 @@
             margin-bottom: 25px;
         }
 
-        /* تصميم الكؤوس */
         .cup {
             width: 65px;
             height: 130px;
@@ -229,7 +225,6 @@
             margin-bottom: 5px;
         }
 
-        /* النوافذ المنسدلة */
         .modal {
             position: fixed;
             top: 0;
@@ -309,7 +304,6 @@
 </head>
 <body>
 
-    <!-- الهيدر العلوي -->
     <header>
         <div class="top-bar">
             <div class="wallet-box" onclick="openWalletModal()">
@@ -330,7 +324,6 @@
         </div>
     </header>
 
-    <!-- منطقة اللعبة الرئيسية -->
     <div class="game-container">
         <div class="cups-grid" id="cupsGrid"></div>
         <div class="action-buttons">
@@ -345,7 +338,6 @@
         </div>
     </div>
 
-    <!-- نافذة المساعدة عند الخطأ -->
     <div class="modal" id="adModal">
         <div class="modal-content">
             <h2>📢 خطأ في الحركة!</h2>
@@ -355,7 +347,6 @@
         </div>
     </div>
 
-    <!-- نافذة نهاية المستوى والأرباح الخضراء -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <h2>🎉 مبروك أنهيت المستوى!</h2>
@@ -365,7 +356,6 @@
         </div>
     </div>
 
-    <!-- نافذة المحفظة وطريقة السحب -->
     <div class="modal" id="walletModal">
         <div class="modal-content">
             <h2>💳 محفظة الأرباح والسحب</h2>
@@ -384,7 +374,6 @@
         </div>
     </div>
 
-    <!-- نافذة خدمة العملاء الذكية -->
     <div class="modal" id="aiModal">
         <div class="modal-content">
             <h2>🤖 المساعد الذكي (خدمة العملاء)</h2>
