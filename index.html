@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة الكؤوس الطبيعية - التحدي الأكبر</title>
+    
+    <!-- كود إعلانات جوجل AdSense الفعلي الخاص بك -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2912308835773162" crossorigin="anonymous"></script>
+
     <style>
         :root {
             --primary: #2e7d32;
@@ -152,7 +156,7 @@
             margin-bottom: 25px;
         }
 
-        /* تصميم الكؤوس (متغير حسب الواجهة المختار) */
+        /* تصميم الكؤوس */
         .cup {
             width: 65px;
             height: 130px;
@@ -168,11 +172,8 @@
             transition: transform 0.4s ease, border-color 0.3s ease;
         }
 
-        /* شكل 1: أبريق */
         .style-1 { border-radius: 10px 10px 22px 22px; border-top: 2px solid rgba(255,255,255,0.4); }
-        /* شكل 2: كأس كلاسيكي عريض */
         .style-2 { border-radius: 5px 5px 25px 25px; width: 70px; }
-        /* شكل 3: قنينة مخبرية حديثة */
         .style-3 { border-radius: 20px 20px 15px 15px; width: 55px; }
 
         .cup.selected {
@@ -211,7 +212,6 @@
             transform: scale(1.05);
         }
 
-        /* لوحة المعلومات والذكاء الاصطناعي المدمجة أسفل اللعبة */
         .info-section {
             width: 100%;
             max-width: 500px;
@@ -229,7 +229,7 @@
             margin-bottom: 5px;
         }
 
-        /* النوافذ المنسدلة (Modals) */
+        /* النوافذ المنسدلة */
         .modal {
             position: fixed;
             top: 0;
@@ -295,7 +295,6 @@
             background: rgba(0, 230, 118, 0.2);
         }
 
-        /* نافذة الذكاء الاصطناعي لخدمة العملاء */
         .ai-chat-box {
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
@@ -340,14 +339,13 @@
             <button class="game-btn" onclick="openAiHelpModal()" style="background: linear-gradient(45deg, #0288d1, #26c6da);">🤖 خدمة العملاء الذكية</button>
         </div>
 
-        <!-- فقرة تعريفية باللعبة -->
         <div class="info-section">
             <h3>🌿 نبذة عن اللعبة</h3>
             <p>لعبة ملء الكؤوس الطبيعية تجمع بين الاسترخاء العقلي وأرباح مالية حقيقية تسحب عبر <b>USDT</b> أو <b>PayPal</b> عند الوصول إلى 50 دولار. استمتع بأجواء الطبيعة الخلابة والموسيقى الهادئة.</p>
         </div>
     </div>
 
-    <!-- نافذة المساعدة عند الخطأ (إعلان افتراضي) -->
+    <!-- نافذة المساعدة عند الخطأ -->
     <div class="modal" id="adModal">
         <div class="modal-content">
             <h2>📢 خطأ في الحركة!</h2>
@@ -357,7 +355,7 @@
         </div>
     </div>
 
-    <!-- نافذة نهاية المستوى والاحتفال بالأرباح الخضراء -->
+    <!-- نافذة نهاية المستوى والأرباح الخضراء -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <h2>🎉 مبروك أنهيت المستوى!</h2>
@@ -386,7 +384,7 @@
         </div>
     </div>
 
-    <!-- نافذة خدمة العملاء بالذكاء الاصطناعي -->
+    <!-- نافذة خدمة العملاء الذكية -->
     <div class="modal" id="aiModal">
         <div class="modal-content">
             <h2>🤖 المساعد الذكي (خدمة العملاء)</h2>
@@ -400,23 +398,20 @@
     </div>
 
     <script>
-        // إعدادات المتغيرات الرئيسية
         let currentLevel = 1;
         let balance = 0.00;
         const targetBalance = 50.00;
         let selectedCupIndex = null;
         let adCallback = null;
         let selectedPaymentMethod = 'USDT';
-        let currentCupStyleId = 1; // 1: أبريق, 2: كلاسيكي, 3: مخبري
+        let currentCupStyleId = 1;
         
         let soundEnabled = true;
         let vibrateEnabled = true;
-        let currentTrackIndex = 0; // 0: تيتانيك هادئة, 1: صينية شهيرة هادئة
+        let currentTrackIndex = 0;
 
-        // توليد ألوان متعددة (تشمل البنفسجي، الوردي، الأصفر، الأخضر)
         const palette = ['#ab47bc', '#ec407a', '#ffee58', '#26a69a', '#42a5f5', '#66bb6a', '#ffa726'];
         
-        // خلفيات طبيعية متغيرة حسب المستويات
         const naturalBgs = [
             'linear-gradient(135deg, rgba(27, 46, 27, 0.9), rgba(15, 30, 15, 0.95)), url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80")',
             'linear-gradient(135deg, rgba(12, 36, 97, 0.9), rgba(30, 55, 153, 0.95)), url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80")',
@@ -425,8 +420,6 @@
         ];
 
         let cupsData = [];
-
-        // نظام تشغيل الموسيقى المستمرة (موسيقى هادئة باستخدام Web Audio API لتوليد ألحان تيتانيك والصينية التناغمية)
         let audioCtx = null;
         let musicInterval = null;
 
@@ -437,7 +430,6 @@
 
             if (musicInterval) clearInterval(musicInterval);
 
-            // ألحان تيتانيك الهادئة أو الموسيقى الصينية الشهيرة بنغمات بنتاطونيك
             const titanicNotes = [523.25, 587.33, 659.25, 587.33, 523.25, 440, 493.88, 523.25];
             const chineseNotes = [523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25, 587.33];
             let noteIndex = 0;
@@ -494,7 +486,6 @@
             }
         }
 
-        // إعداد المستويات والصعوبة
         function initLevel() {
             selectedCupIndex = null;
             let isHard = (currentLevel % 4 === 0);
@@ -514,7 +505,6 @@
             cupsData.push([]);
             if(isHard && numCups > 5) cupsData.push([]);
 
-            // تغيير الخلفية الطبيعية
             document.body.style.background = naturalBgs[(currentLevel - 1) % naturalBgs.length];
             document.body.style.backgroundSize = 'cover';
 
@@ -524,7 +514,6 @@
             if (soundEnabled && !musicInterval) startContinuousMusic();
         }
 
-        // تبديل شكل الكؤوس الثلاثة
         function changeCupStyle() {
             currentCupStyleId = (currentCupStyleId % 3) + 1;
             let names = {1: "الأباريق الملكية", 2: "الكؤوس الكلاسيكية", 3: "القوارير المخبرية"};
@@ -601,7 +590,6 @@
             document.getElementById('rewardText').innerText = `+$${earned.toFixed(3)}`;
             document.getElementById('winModal').classList.add('active');
 
-            // إعلان كل 5 مستويات
             if (currentLevel % 5 === 0) {
                 setTimeout(() => {
                     alert("📢 إعلان ممول بين المستويات (أكملت 5 مستويات بنجاح)!");
@@ -620,7 +608,6 @@
             initLevel();
         }
 
-        // إعلانات افتراضية
         function showAdModal(text, callback) {
             document.getElementById('adDescription').innerText = text;
             adCallback = callback;
@@ -647,7 +634,6 @@
             initLevel();
         }
 
-        // محفظة الأرباح وسريط التقدم الأخضر
         updateWalletUI();
 
         function updateWalletUI() {
@@ -687,7 +673,6 @@
             }
         }
 
-        // خدمة العملاء الذكية (الذكاء الاصطناعي)
         function openAiHelpModal() {
             document.getElementById('aiModal').classList.add('active');
         }
@@ -716,7 +701,6 @@
             document.getElementById('aiQuestion').value = '';
         }
 
-        // تشغيل اللعبة لأول مرة
         initLevel();
     </script>
 </body>
