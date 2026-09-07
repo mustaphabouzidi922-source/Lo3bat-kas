@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة تحدي الكؤوس الاحترافية</title>
+    <title>لعبة الكؤوس الزجاجية الاحترافية</title>
     <style>
         :root {
-            --primary: #4e54c8;
-            --secondary: #8f94fb;
-            --accent: #ff007f;
-            --success: #28a745;
-            --warning: #ffc107;
-            --dark: #1a1a2e;
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --dark: #0f0c1b;
             --light: #ffffff;
         }
 
@@ -24,13 +24,14 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--dark), #16213e);
+            background: linear-gradient(135deg, var(--dark), #2d1b4e);
             color: var(--light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            transition: background 1s ease;
         }
 
         /* شريط الهيدر العلوي */
@@ -41,11 +42,11 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         .top-bar {
@@ -55,7 +56,7 @@
         }
 
         .wallet-box {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             padding: 8px 15px;
             border-radius: 30px;
             border: 2px solid var(--warning);
@@ -76,8 +77,29 @@
             font-size: 1.1rem;
         }
 
+        .controls-top {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         .level-badge {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
@@ -105,7 +127,7 @@
             font-size: 0.8rem;
             text-align: center;
             margin-top: 3px;
-            color: #aaa;
+            color: #ccc;
         }
 
         /* منطقة اللعبة الرئيسية */
@@ -123,49 +145,60 @@
 
         .cups-grid {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
             margin-bottom: 30px;
+            perspective: 1000px;
         }
 
-        /* تصميم الكأس */
+        /* تصميم الكأس الاحترافي (يشبه الأبريق / زجاجي شفاف) */
         .cup {
-            width: 70px;
-            height: 120px;
-            border: 4px solid var(--light);
-            border-top: none;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            width: 65px;
+            height: 130px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            border-top: 2px solid rgba(255, 255, 255, 0.3); /* فتحة الأبريق */
+            border-radius: 10px 10px 20px 20px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column-reverse;
             cursor: pointer;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.05);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            transition: transform 0.4s ease, border-color 0.3s ease;
+        }
+
+        /* تأثير انعكاس الزجاج */
+        .cup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 5px;
+            width: 6px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 3px;
+            z-index: 10;
+            pointer-events: none;
         }
 
         .cup.selected {
             border-color: var(--accent);
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(255,0,127,0.4);
+            transform: translateY(-25px) scale(1.05);
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.4), 0 15px 30px rgba(253,121,168,0.5);
         }
 
         .cup-unit {
             width: 100%;
             height: 25%;
-            transition: 0.3s;
+            transition: height 0.3s;
+            position: relative;
         }
 
-        /* الأزرار والتحكم */
-        .controls {
-            display: flex;
-            gap: 15px;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, var(--accent), #ff5e62);
+        .game-btn {
+            background: linear-gradient(45deg, var(--accent), #ff7675);
             color: white;
             border: none;
             padding: 12px 25px;
@@ -173,11 +206,11 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,0,127,0.3);
+            box-shadow: 0 4px 15px rgba(253,121,168,0.4);
             transition: 0.3s;
         }
 
-        .btn:hover {
+        .game-btn:hover {
             transform: scale(1.05);
         }
 
@@ -188,8 +221,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -205,14 +238,14 @@
         }
 
         .modal-content {
-            background: var(--dark);
+            background: #1a1532;
             border: 2px solid var(--primary);
             padding: 30px;
             border-radius: 20px;
             text-align: center;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -220,22 +253,6 @@
 
         .modal-content h2 {
             color: var(--warning);
-        }
-
-        /* تأثيرات الاحتفال والنقود المتطايرة */
-        .coin-particle {
-            position: absolute;
-            color: var(--warning);
-            font-weight: bold;
-            font-size: 1.2rem;
-            pointer-events: none;
-            animation: flyUp 1s ease-out forwards;
-            z-index: 999;
-        }
-
-        @keyframes flyUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
         }
 
         /* محفظة السحب */
@@ -259,7 +276,7 @@
 
         .method-btn.selected {
             border-color: var(--success);
-            background: rgba(40, 167, 69, 0.2);
+            background: rgba(0, 184, 148, 0.2);
         }
     </style>
 </head>
@@ -270,6 +287,10 @@
         <div class="top-bar">
             <div class="wallet-box" onclick="openWalletModal()">
                 💰 <span id="balanceText">$0.000</span> / $50.0
+            </div>
+            <div class="controls-top">
+                <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
+                <button class="icon-btn" id="vibrateBtn" onclick="toggleVibrate()">📳</button>
             </div>
             <div class="level-badge" id="levelText">المستوى 1</div>
         </div>
@@ -282,90 +303,155 @@
     </header>
 
     <!-- منطقة اللعبة -->
-    <div class="game-container" id="gameContainer">
+    <div class="game-container">
         <div class="cups-grid" id="cupsGrid"></div>
-        <div class="controls">
-            <button class="btn" onclick="resetLevel()">إعادة المحاولة</button>
-        </div>
+        <button class="game-btn" onclick="resetLevel()">إعادة المحاولة</button>
     </div>
 
-    <!-- نافذة إعلان وهمي (مضاعفة أو مساعدة) -->
+    <!-- نافذة إعلان المساعدة عند الخطأ -->
     <div class="modal" id="adModal">
         <div class="modal-content">
-            <h2>📢 إعلان ممول</h2>
-            <p id="adDescription">شاهد إعلان قصير لمضاعفة الجائزة أو الحصول على كأس فارغ!</p>
-            <button class="btn" onclick="watchAd()">مشاهدة الإعلان الآن</button>
-            <button class="btn" style="background: #555;" onclick="closeAdModal()">تخطي</button>
+            <h2>📢 خطأ في النركة!</h2>
+            <p id="adDescription">شاهد إعلان قصير للحصول على كأس فارغ إضافي ومتابعة اللعب.</p>
+            <button class="game-btn" onclick="watchAd()">مشاهدة الإعلان والمساعدة</button>
+            <button class="game-btn" style="background: #555;" onclick="closeAdModal()">إلغاء</button>
         </div>
     </div>
 
-    <!-- نافذة نهاية المستوى / الاحتفال -->
+    <!-- نافذة نهاية المستوى -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <h2>🎉 مبروك أنهيت المستوى!</h2>
             <p>لقد ربحت <span id="rewardText" style="color:var(--warning)">$0.001</span></p>
-            <button class="btn" onclick="watchDoubleAd()">🎥 شاهد إعلان لمضاعفة المبلغ (x2)</button>
-            <button class="btn" style="background:var(--success);" onclick="nextLevel()">المستوى التالي ➡️</button>
+            <button class="game-btn" onclick="watchDoubleAd()">🎥 شاهد إعلان لمضاعفة الجائزة (x2)</button>
+            <button class="game-btn" style="background:var(--success);" onclick="nextLevel()">المستوى التالي ➡️</button>
         </div>
     </div>
 
     <!-- نافذة المحفظة والسحب -->
     <div class="modal" id="walletModal">
         <div class="modal-content">
-            <h2>💳 محفظة السحب</h2>
+            <h2>💳 محفظة الأرباح</h2>
             <p>الرصيد الحالي: <span id="modalBalance" style="color:var(--warning); font-weight:bold;">$0.000</span></p>
-            <p style="font-size: 0.9rem; color: #ccc;">حد السحب الأدنى هو 50 دولار.</p>
+            <p style="font-size: 0.85rem; color: #bbb;">الحد الأدنى للسحب هو 50 دولار.</p>
             
             <div class="wallet-methods">
                 <div class="method-btn selected" onclick="selectMethod('USDT')">USDT</div>
                 <div class="method-btn" onclick="selectMethod('PayPal')">PayPal</div>
             </div>
 
-            <input type="text" id="walletAccount" placeholder="أدخل بريد PayPal أو محفظة USDT" style="padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white; text-align: center;">
+            <input type="text" id="walletAccount" placeholder="أدخل بريد PayPal أو محفظة USDT" style="padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white; text-align: center; outline: none;">
 
-            <button class="btn" style="background: var(--success);" onclick="requestWithdraw()">سحب الأرباح</button>
-            <button class="btn" style="background: #555;" onclick="closeWalletModal()">إغلاق</button>
+            <button class="game-btn" style="background: var(--success);" onclick="requestWithdraw()">سحب الأموال</button>
+            <button class="game-btn" style="background: #555;" onclick="closeWalletModal()">إغلاق</button>
         </div>
     </div>
 
+    <!-- عرض إضافي لصورة واجهة اللعبة الاحترافية المطلوبة -->
+    <div style="margin: 20px auto; max-width: 500px; text-align: center;">
+        <p style="font-size: 0.9rem; color: #a29bfe; margin-bottom: 8px;">تصميم الكؤوس والواجهة:</p>
+        
+    </div>
+
     <script>
-        // إعدادات اللعبة
+        // إعدادات اللعبة والبيانات
         let currentLevel = 1;
         let balance = 0.00;
         const targetBalance = 50.00;
         let selectedCupIndex = null;
         let adCallback = null;
         let selectedPaymentMethod = 'USDT';
+        
+        let soundEnabled = true;
+        let vibrateEnabled = true;
 
-        // ألوان السوائل
-        const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6'];
+        // توليد مجموعة ألوان واسعة (بنفسجي، وردي، أصفر، تركواز، أخضر، برتقالي)
+        const palette = ['#e056fd', '#ff7675', '#fdcb6e', '#00cec9', '#0984e3', '#6c5ce7', '#fab1a0'];
+        
+        // تدرجات خلفيات لكل مستويات متغيرة جمالية
+        const bgGradients = [
+            'linear-gradient(135deg, #0f0c1b, #2d1b4e)',
+            'linear-gradient(135deg, #0c2461, #1e3799)',
+            'linear-gradient(135deg, #2c2c54, #474787)',
+            'linear-gradient(135deg, #1b1464, #5758bb)',
+            'linear-gradient(135deg, #3b316f, #8e44ad)'
+        ];
 
-        // توليد المستويات (إجمالي 300 مستوى)
         let cupsData = [];
+
+        // تشغيل صوت بسيط عبر Web Audio API
+        let audioCtx = null;
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                if (type === 'pour') {
+                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'win') {
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.4);
+                }
+            } catch(e) {}
+        }
+
+        function triggerVibration() {
+            if (vibrateEnabled && navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundBtn').innerText = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function toggleVibrate() {
+            vibrateEnabled = !vibrateEnabled;
+            document.getElementById('vibrateBtn').innerText = vibrateEnabled ? '📳' : '📴';
+        }
 
         function initLevel() {
             selectedCupIndex = null;
-            // توليد كؤوس عشوائية بناءً على المستوى
-            let numCups = Math.min(3 + Math.floor(currentLevel / 50), 6); // تزيد الكؤوس تدريجياً
-            cupsData = [];
             
-            let activeColors = colors.slice(0, numCups - 1);
+            // تحديد صعوبة المستوى (خطرة صعبة / خطرة سهلة بتبادل عدد الكؤوس والألوان)
+            let isHard = (currentLevel % 3 === 0); 
+            let numCups = isHard ? Math.min(4 + Math.floor(currentLevel / 60), 7) : 4; 
+            
+            cupsData = [];
+            let activeColors = palette.slice(0, numCups - 1);
             let pool = [];
             activeColors.forEach(c => {
-                for(let i=0; i<4; i++) pool.push(c);
+                for(let i = 0; i < 4; i++) pool.push(c);
             });
-            // خلط عشوائي
             pool.sort(() => Math.random() - 0.5);
 
-            for(let i=0; i<numCups - 1; i++) {
+            for(let i = 0; i < numCups - 1; i++) {
                 cupsData.push([pool.pop(), pool.pop(), pool.pop(), pool.pop()]);
             }
-            // ترك كأس فارغ
+            // ترك كؤوس فارغة بناءً على الصعوبة
             cupsData.push([]);
+            if(isHard && numCups > 5) cupsData.push([]);
+
+            // تغيير لون الخلفية بشكل جذاب مع كل مستوى
+            document.body.style.background = bgGradients[(currentLevel - 1) % bgGradients.length];
 
             renderCups();
-            document.getElementById('levelTextinnerText', `المستوى ${currentLevel}`);
-            document.getElementById('levelText').innerText = `المستوى ${currentLevel}`;
+            document.getElementById('levelText').innerText = `المستوى ${currentLevel} ${isHard ? '🔥' : '⭐'}`;
         }
 
         function renderCups() {
@@ -387,14 +473,14 @@
         }
 
         function selectCup(index) {
+            triggerVibration();
             if (selectedCupIndex === null) {
-                if (cupsData[index].length === 0) return; // لا يمكن اختيار كأس فارغ للبداية
+                if (cupsData[index].length === 0) return;
                 selectedCupIndex = index;
             } else {
                 if (selectedCupIndex === index) {
-                    selectedCupIndex = null; // إلغاء التحديد
+                    selectedCupIndex = null;
                 } else {
-                    // محاولة نقل السائل
                     moveLiquid(selectedCupIndex, index);
                     selectedCupIndex = null;
                 }
@@ -410,22 +496,21 @@
             
             let colorToMove = fromCup[fromCup.length - 1];
             
-            // تحقق إذا كان الكأس المستهدف فارغ أو يحتوي على نفس اللون العلوي
             if (toCup.length === 0 || (toCup[toCup.length - 1] === colorToMove && toCup.length < 4)) {
                 fromCup.pop();
                 toCup.push(colorToMove);
+                playSound('pour');
                 checkWin();
             } else {
-                // خطأ في النقل -> إظهار إعلان للحصول على كأس فارغ إضافي
-                showAdModal("خطأ في الحركة! شاهد إعلان للحصول على مساعدة (كأس فارغ إضافي).", () => {
-                    cupsData.push([]); // إضافة كأس فارغ للمساعدة
+                // خطأ في الحركة -> عرض إعلان للحصول على كأس فارغ مساعد
+                showAdModal("حركة خاطئة! شاهد إعلان للحصول على كأس فارغ إضافي ومتابعة اللعب.", () => {
+                    cupsData.push([]);
                     renderCups();
                 });
             }
         }
 
         function checkWin() {
-            // تحقق إذا كل كأس إما فارغ أو ممتلئ بلون واحد بالكامل
             let won = cupsData.every(cup => cup.length === 0 || (cup.length === 4 && cup.every(v => v === cup[0])));
             if (won) {
                 triggerWinEffects();
@@ -433,27 +518,27 @@
         }
 
         function triggerWinEffects() {
-            // إضافة النقود (0.001 دولار لكل مستوى)
+            playSound('win');
             let earned = 0.001;
             balance += earned;
             if (balance > targetBalance) balance = targetBalance;
             updateWalletUI();
 
-            // إظهار نافذة الفوز والاحتفال
             document.getElementById('rewardText').innerText = `$${earned.toFixed(3)}`;
             document.getElementById('winModal').classList.add('active');
 
-            // إعلانات كل 5 مستويات
+            // إعلان إجباري كل 5 مستويات
             if (currentLevel % 5 === 0) {
                 setTimeout(() => {
-                    alert("إعلان إجباري بين المستويات!");
-                }, 500);
+                    alert("📢 إعلان ممول بين المستويات (5 مستويات مكتملة)!");
+                }, 400);
             }
         }
 
         function nextLevel() {
             document.getElementById('winModal').classList.remove('active');
             currentLevel++;
+            if (currentLevel > 300) currentLevel = 300;
             initLevel();
         }
 
@@ -461,7 +546,6 @@
             initLevel();
         }
 
-        // نظام الإعلانات الوهمية
         function showAdModal(text, callback) {
             document.getElementById('adDescription').innerText = text;
             adCallback = callback;
@@ -474,21 +558,20 @@
         }
 
         function watchAd() {
-            alert("جاري عرض الإعلان... (تخيل أن إعلان فيديو يشتغل هنا)");
+            alert("▶️ جاري تشغيل إعلان الفيديو التفاعلي...");
             if (adCallback) adCallback();
             closeAdModal();
         }
 
         function watchDoubleAd() {
-            alert("جاري عرض إعلان المضاعفة...");
-            balance += 0.001; // مضاعفة الجائزة بإضافة 0.001 أخرى
+            alert("▶️ جاري عرض إعلان المضاعفة...");
+            balance += 0.001;
             updateWalletUI();
             document.getElementById('winModal').classList.remove('active');
             currentLevel++;
             initLevel();
         }
 
-        // نظام المحفظة والسحب
         updateWalletUI();
 
         function updateWalletUI() {
@@ -515,20 +598,20 @@
         function requestWithdraw() {
             let account = document.getElementById('walletAccount').value;
             if (!account) {
-                alert("الرجاء إدخال الحساب بشكل صحيح!");
+                alert("الرجاء إدخال البريد أو رقم المحفظة بشكل صحيح!");
                 return;
             }
             if (balance < targetBalance) {
                 alert(`عذراً، رصيدك الحالي ($${balance.toFixed(3)}) لم يبلغ حد السحب الأدنى ($50.00)`);
             } else {
-                alert(`تم تقديم طلب السحب بنجاح عبر ${selectedPaymentMethod} إلى الحساب: ${account}`);
+                alert(`🎉 تم إرسال طلب السحب بنجاح عبر ${selectedPaymentMethod} إلى: ${account}`);
                 balance = 0;
                 updateWalletUI();
                 closeWalletModal();
             }
         }
 
-        // بدء اللعبة لأول مرة
+        // بدء اللعبة
         initLevel();
     </script>
 </body>
