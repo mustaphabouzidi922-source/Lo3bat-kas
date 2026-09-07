@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الكؤوس الزجاجية الاحترافية</title>
+    <title>لعبة الكؤوس الطبيعية - التحدي الأكبر</title>
     <style>
         :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --accent: #fd79a8;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --dark: #0f0c1b;
+            --primary: #2e7d32;
+            --secondary: #81c784;
+            --accent: #ffb74d;
+            --success: #00e676;
+            --dark: #1b2e1b;
             --light: #ffffff;
         }
 
@@ -24,7 +23,9 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--dark), #2d1b4e);
+            background: linear-gradient(135deg, rgba(27, 46, 27, 0.9), rgba(15, 30, 15, 0.95)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+            background-size: cover;
             color: var(--light);
             min-height: 100vh;
             display: flex;
@@ -42,11 +43,11 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
         .top-bar {
@@ -56,10 +57,10 @@
         }
 
         .wallet-box {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             padding: 8px 15px;
             border-radius: 30px;
-            border: 2px solid var(--warning);
+            border: 2px solid var(--success);
             display: flex;
             align-items: center;
             gap: 8px;
@@ -72,52 +73,52 @@
         }
 
         .wallet-box span {
-            color: var(--warning);
+            color: var(--success);
             font-weight: bold;
             font-size: 1.1rem;
         }
 
         .controls-top {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
 
         .icon-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: 0.3s;
         }
 
         .icon-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .level-badge {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
         }
 
-        /* شريط التقدم للسحب */
+        /* شريط التقدم للأخضر */
         .progress-container {
             width: 100%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             border-radius: 10px;
-            height: 15px;
+            height: 16px;
             position: relative;
             overflow: hidden;
         }
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--warning), var(--success));
+            background: linear-gradient(90deg, #66bb6a, var(--success));
             width: 0%;
             transition: width 0.5s ease;
             border-radius: 10px;
@@ -127,7 +128,7 @@
             font-size: 0.8rem;
             text-align: center;
             margin-top: 3px;
-            color: #ccc;
+            color: #dcedc8;
         }
 
         /* منطقة اللعبة الرئيسية */
@@ -148,70 +149,84 @@
             gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 30px;
-            perspective: 1000px;
+            margin-bottom: 25px;
         }
 
-        /* تصميم الكأس الاحترافي (يشبه الأبريق / زجاجي شفاف) */
+        /* تصميم الكؤوس (متغير حسب الواجهة المختار) */
         .cup {
             width: 65px;
             height: 130px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 3px solid rgba(255, 255, 255, 0.6);
-            border-top: 2px solid rgba(255, 255, 255, 0.3); /* فتحة الأبريق */
-            border-radius: 10px 10px 20px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.7);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column-reverse;
             cursor: pointer;
-            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
+            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.3), 0 8px 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
             transition: transform 0.4s ease, border-color 0.3s ease;
         }
 
-        /* تأثير انعكاس الزجاج */
-        .cup::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 5px;
-            width: 6px;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 3px;
-            z-index: 10;
-            pointer-events: none;
-        }
+        /* شكل 1: أبريق */
+        .style-1 { border-radius: 10px 10px 22px 22px; border-top: 2px solid rgba(255,255,255,0.4); }
+        /* شكل 2: كأس كلاسيكي عريض */
+        .style-2 { border-radius: 5px 5px 25px 25px; width: 70px; }
+        /* شكل 3: قنينة مخبرية حديثة */
+        .style-3 { border-radius: 20px 20px 15px 15px; width: 55px; }
 
         .cup.selected {
-            border-color: var(--accent);
-            transform: translateY(-25px) scale(1.05);
-            box-shadow: inset 0 0 15px rgba(255,255,255,0.4), 0 15px 30px rgba(253,121,168,0.5);
+            border-color: var(--success);
+            transform: translateY(-25px) scale(1.06);
+            box-shadow: inset 0 0 18px rgba(0,230,118,0.5), 0 15px 30px rgba(0,230,118,0.4);
         }
 
         .cup-unit {
             width: 100%;
             height: 25%;
             transition: height 0.3s;
-            position: relative;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .game-btn {
-            background: linear-gradient(45deg, var(--accent), #ff7675);
+            background: linear-gradient(45deg, var(--primary), var(--success));
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 25px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(253,121,168,0.4);
+            box-shadow: 0 4px 15px rgba(0,230,118,0.3);
             transition: 0.3s;
         }
 
         .game-btn:hover {
             transform: scale(1.05);
+        }
+
+        /* لوحة المعلومات والذكاء الاصطناعي المدمجة أسفل اللعبة */
+        .info-section {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .info-section h3 {
+            color: var(--accent);
+            margin-bottom: 5px;
         }
 
         /* النوافذ المنسدلة (Modals) */
@@ -238,35 +253,36 @@
         }
 
         .modal-content {
-            background: #1a1532;
-            border: 2px solid var(--primary);
-            padding: 30px;
+            background: #122212;
+            border: 2px solid var(--success);
+            padding: 25px;
             border-radius: 20px;
             text-align: center;
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-content h2 {
-            color: var(--warning);
+            color: var(--success);
         }
 
-        /* محفظة السحب */
         .wallet-methods {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .method-btn {
             background: rgba(255,255,255,0.1);
             border: 2px solid var(--light);
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 10px;
             color: white;
             cursor: pointer;
@@ -276,7 +292,19 @@
 
         .method-btn.selected {
             border-color: var(--success);
-            background: rgba(0, 184, 148, 0.2);
+            background: rgba(0, 230, 118, 0.2);
+        }
+
+        /* نافذة الذكاء الاصطناعي لخدمة العملاء */
+        .ai-chat-box {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: right;
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
@@ -286,11 +314,12 @@
     <header>
         <div class="top-bar">
             <div class="wallet-box" onclick="openWalletModal()">
-                💰 <span id="balanceText">$0.000</span> / $50.0
+                💰 <span id="balanceText" style="color:var(--success)">$0.000</span> / $50.0
             </div>
             <div class="controls-top">
-                <button class="icon-btn" id="soundBtn" onclick="toggleSound()">🔊</button>
-                <button class="icon-btn" id="vibrateBtn" onclick="toggleVibrate()">📳</button>
+                <button class="icon-btn" id="soundBtn" onclick="toggleSound()" title="تشغيل / كتم الموسيقى">🔊</button>
+                <button class="icon-btn" id="musicTypeBtn" onclick="switchMusicTrack()" title="تغيير النغمة (تيتانيك / صينية)">🎼</button>
+                <button class="icon-btn" id="vibrateBtn" onclick="toggleVibrate()" title="الهزاز">📳</button>
             </div>
             <div class="level-badge" id="levelText">المستوى 1</div>
         </div>
@@ -298,126 +327,160 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
-            <div class="progress-text">حد السحب 50 دولار (USDT / PayPal)</div>
+            <div class="progress-text">شريط الأرباح والوصول لحد السحب (50 دولار)</div>
         </div>
     </header>
 
-    <!-- منطقة اللعبة -->
+    <!-- منطقة اللعبة الرئيسية -->
     <div class="game-container">
         <div class="cups-grid" id="cupsGrid"></div>
-        <button class="game-btn" onclick="resetLevel()">إعادة المحاولة</button>
+        <div class="action-buttons">
+            <button class="game-btn" onclick="resetLevel()">إعادة المحاولة</button>
+            <button class="game-btn" onclick="changeCupStyle()" style="background: linear-gradient(45deg, #ff9800, #ffb74d);">🎨 تغيير شكل الكؤوس</button>
+            <button class="game-btn" onclick="openAiHelpModal()" style="background: linear-gradient(45deg, #0288d1, #26c6da);">🤖 خدمة العملاء الذكية</button>
+        </div>
+
+        <!-- فقرة تعريفية باللعبة -->
+        <div class="info-section">
+            <h3>🌿 نبذة عن اللعبة</h3>
+            <p>لعبة ملء الكؤوس الطبيعية تجمع بين الاسترخاء العقلي وأرباح مالية حقيقية تسحب عبر <b>USDT</b> أو <b>PayPal</b> عند الوصول إلى 50 دولار. استمتع بأجواء الطبيعة الخلابة والموسيقى الهادئة.</p>
+        </div>
     </div>
 
-    <!-- نافذة إعلان المساعدة عند الخطأ -->
+    <!-- نافذة المساعدة عند الخطأ (إعلان افتراضي) -->
     <div class="modal" id="adModal">
         <div class="modal-content">
-            <h2>📢 خطأ في النركة!</h2>
-            <p id="adDescription">شاهد إعلان قصير للحصول على كأس فارغ إضافي ومتابعة اللعب.</p>
+            <h2>📢 خطأ في الحركة!</h2>
+            <p id="adDescription">شاهد إعلان قصير للحصول على كأس فارغ إضافي ومتابعة التقدم.</p>
             <button class="game-btn" onclick="watchAd()">مشاهدة الإعلان والمساعدة</button>
             <button class="game-btn" style="background: #555;" onclick="closeAdModal()">إلغاء</button>
         </div>
     </div>
 
-    <!-- نافذة نهاية المستوى -->
+    <!-- نافذة نهاية المستوى والاحتفال بالأرباح الخضراء -->
     <div class="modal" id="winModal">
         <div class="modal-content">
             <h2>🎉 مبروك أنهيت المستوى!</h2>
-            <p>لقد ربحت <span id="rewardText" style="color:var(--warning)">$0.001</span></p>
-            <button class="game-btn" onclick="watchDoubleAd()">🎥 شاهد إعلان لمضاعفة الجائزة (x2)</button>
+            <p>تم إضافة أرباح خضراء إلى رصيدك: <span id="rewardText" style="color:var(--success); font-weight:bold;">+$0.001</span></p>
+            <button class="game-btn" onclick="watchDoubleAd()">🎥 مشاهدة إعلان لمضاعفة الجائزة (x2)</button>
             <button class="game-btn" style="background:var(--success);" onclick="nextLevel()">المستوى التالي ➡️</button>
         </div>
     </div>
 
-    <!-- نافذة المحفظة والسحب -->
+    <!-- نافذة المحفظة وطريقة السحب -->
     <div class="modal" id="walletModal">
         <div class="modal-content">
-            <h2>💳 محفظة الأرباح</h2>
-            <p>الرصيد الحالي: <span id="modalBalance" style="color:var(--warning); font-weight:bold;">$0.000</span></p>
-            <p style="font-size: 0.85rem; color: #bbb;">الحد الأدنى للسحب هو 50 دولار.</p>
+            <h2>💳 محفظة الأرباح والسحب</h2>
+            <p>الرصيد الأخضر الحالي: <span id="modalBalance" style="color:var(--success); font-weight:bold;">$0.000</span></p>
+            <p style="font-size: 0.85rem; color: #ccc;">الحد الأدنى للسحب هو <b>50 دولار</b>.</p>
             
             <div class="wallet-methods">
                 <div class="method-btn selected" onclick="selectMethod('USDT')">USDT</div>
                 <div class="method-btn" onclick="selectMethod('PayPal')">PayPal</div>
             </div>
 
-            <input type="text" id="walletAccount" placeholder="أدخل بريد PayPal أو محفظة USDT" style="padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white; text-align: center; outline: none;">
+            <input type="text" id="walletAccount" placeholder="أدخل البريد أو عنوان محفظة USDT" style="padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white; text-align: center; outline: none;">
 
             <button class="game-btn" style="background: var(--success);" onclick="requestWithdraw()">سحب الأموال</button>
             <button class="game-btn" style="background: #555;" onclick="closeWalletModal()">إغلاق</button>
         </div>
     </div>
 
-    <!-- عرض إضافي لصورة واجهة اللعبة الاحترافية المطلوبة -->
-    <div style="margin: 20px auto; max-width: 500px; text-align: center;">
-        <p style="font-size: 0.9rem; color: #a29bfe; margin-bottom: 8px;">تصميم الكؤوس والواجهة:</p>
-        
+    <!-- نافذة خدمة العملاء بالذكاء الاصطناعي -->
+    <div class="modal" id="aiModal">
+        <div class="modal-content">
+            <h2>🤖 المساعد الذكي (خدمة العملاء)</h2>
+            <div class="ai-chat-box" id="aiChatResponse">
+                أهلاً بك! أنا مساعد الذكاء الاصطناعي الخاص باللعبة. كيف يمكنني مساعدتك بخصوص المستويات، سحب الأرباح، أو الإعلانات؟
+            </div>
+            <input type="text" id="aiQuestion" placeholder="اكتب سؤالك هنا..." style="padding: 10px; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: white; text-align: right; outline: none;">
+            <button class="game-btn" onclick="askAiBot()">إرسال للسؤال</button>
+            <button class="game-btn" style="background: #555;" onclick="closeAiModal()">إغلاق</button>
+        </div>
     </div>
 
     <script>
-        // إعدادات اللعبة والبيانات
+        // إعدادات المتغيرات الرئيسية
         let currentLevel = 1;
         let balance = 0.00;
         const targetBalance = 50.00;
         let selectedCupIndex = null;
         let adCallback = null;
         let selectedPaymentMethod = 'USDT';
+        let currentCupStyleId = 1; // 1: أبريق, 2: كلاسيكي, 3: مخبري
         
         let soundEnabled = true;
         let vibrateEnabled = true;
+        let currentTrackIndex = 0; // 0: تيتانيك هادئة, 1: صينية شهيرة هادئة
 
-        // توليد مجموعة ألوان واسعة (بنفسجي، وردي، أصفر، تركواز، أخضر، برتقالي)
-        const palette = ['#e056fd', '#ff7675', '#fdcb6e', '#00cec9', '#0984e3', '#6c5ce7', '#fab1a0'];
+        // توليد ألوان متعددة (تشمل البنفسجي، الوردي، الأصفر، الأخضر)
+        const palette = ['#ab47bc', '#ec407a', '#ffee58', '#26a69a', '#42a5f5', '#66bb6a', '#ffa726'];
         
-        // تدرجات خلفيات لكل مستويات متغيرة جمالية
-        const bgGradients = [
-            'linear-gradient(135deg, #0f0c1b, #2d1b4e)',
-            'linear-gradient(135deg, #0c2461, #1e3799)',
-            'linear-gradient(135deg, #2c2c54, #474787)',
-            'linear-gradient(135deg, #1b1464, #5758bb)',
-            'linear-gradient(135deg, #3b316f, #8e44ad)'
+        // خلفيات طبيعية متغيرة حسب المستويات
+        const naturalBgs = [
+            'linear-gradient(135deg, rgba(27, 46, 27, 0.9), rgba(15, 30, 15, 0.95)), url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80")',
+            'linear-gradient(135deg, rgba(12, 36, 97, 0.9), rgba(30, 55, 153, 0.95)), url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80")',
+            'linear-gradient(135deg, rgba(44, 44, 84, 0.9), rgba(71, 71, 135, 0.95)), url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80")',
+            'linear-gradient(135deg, rgba(27, 20, 100, 0.9), rgba(87, 88, 187, 0.95)), url("https://images.unsplash.com/photo-1511497584788-876761142212?auto=format&fit=crop&w=1200&q=80")'
         ];
 
         let cupsData = [];
 
-        // تشغيل صوت بسيط عبر Web Audio API
+        // نظام تشغيل الموسيقى المستمرة (موسيقى هادئة باستخدام Web Audio API لتوليد ألحان تيتانيك والصينية التناغمية)
         let audioCtx = null;
-        function playSound(type) {
-            if (!soundEnabled) return;
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let osc = audioCtx.createOscillator();
-                let gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                
-                if (type === 'pour') {
-                    osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.2);
-                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.2);
-                } else if (type === 'win') {
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
-                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1);
-                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2);
-                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 0.4);
-                }
-            } catch(e) {}
-        }
+        let musicInterval = null;
 
-        function triggerVibration() {
-            if (vibrateEnabled && navigator.vibrate) {
-                navigator.vibrate(50);
-            }
+        function startContinuousMusic() {
+            if (!soundEnabled) return;
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            if (musicInterval) clearInterval(musicInterval);
+
+            // ألحان تيتانيك الهادئة أو الموسيقى الصينية الشهيرة بنغمات بنتاطونيك
+            const titanicNotes = [523.25, 587.33, 659.25, 587.33, 523.25, 440, 493.88, 523.25];
+            const chineseNotes = [523.25, 587.33, 659.25, 783.99, 880, 783.99, 659.25, 587.33];
+            let noteIndex = 0;
+
+            musicInterval = setInterval(() => {
+                if (!soundEnabled || !audioCtx) return;
+                try {
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    
+                    let melody = currentTrackIndex === 0 ? titanicNotes : chineseNotes;
+                    osc.frequency.setValueAtTime(melody[noteIndex], audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.5);
+
+                    noteIndex = (noteIndex + 1) % melody.length;
+                } catch(e) {}
+            }, 2000);
         }
 
         function toggleSound() {
             soundEnabled = !soundEnabled;
             document.getElementById('soundBtn').innerText = soundEnabled ? '🔊' : '🔇';
+            if (soundEnabled) {
+                startContinuousMusic();
+            } else {
+                if (musicInterval) clearInterval(musicInterval);
+            }
+        }
+
+        function switchMusicTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % 2;
+            let trackName = currentTrackIndex === 0 ? "موسيقى تيتانيك الهادئة" : "الموسيقى الصينية الشهيرة";
+            alert(`🎼 تم التبديل إلى: ${trackName}`);
+            if (soundEnabled) startContinuousMusic();
         }
 
         function toggleVibrate() {
@@ -425,12 +488,17 @@
             document.getElementById('vibrateBtn').innerText = vibrateEnabled ? '📳' : '📴';
         }
 
+        function triggerVibration() {
+            if (vibrateEnabled && navigator.vibrate) {
+                navigator.vibrate(40);
+            }
+        }
+
+        // إعداد المستويات والصعوبة
         function initLevel() {
             selectedCupIndex = null;
-            
-            // تحديد صعوبة المستوى (خطرة صعبة / خطرة سهلة بتبادل عدد الكؤوس والألوان)
-            let isHard = (currentLevel % 3 === 0); 
-            let numCups = isHard ? Math.min(4 + Math.floor(currentLevel / 60), 7) : 4; 
+            let isHard = (currentLevel % 4 === 0);
+            let numCups = isHard ? Math.min(4 + Math.floor(currentLevel / 50), 7) : 4;
             
             cupsData = [];
             let activeColors = palette.slice(0, numCups - 1);
@@ -443,15 +511,25 @@
             for(let i = 0; i < numCups - 1; i++) {
                 cupsData.push([pool.pop(), pool.pop(), pool.pop(), pool.pop()]);
             }
-            // ترك كؤوس فارغة بناءً على الصعوبة
             cupsData.push([]);
             if(isHard && numCups > 5) cupsData.push([]);
 
-            // تغيير لون الخلفية بشكل جذاب مع كل مستوى
-            document.body.style.background = bgGradients[(currentLevel - 1) % bgGradients.length];
+            // تغيير الخلفية الطبيعية
+            document.body.style.background = naturalBgs[(currentLevel - 1) % naturalBgs.length];
+            document.body.style.backgroundSize = 'cover';
 
             renderCups();
-            document.getElementById('levelText').innerText = `المستوى ${currentLevel} ${isHard ? '🔥' : '⭐'}`;
+            document.getElementById('levelText').innerText = `المستوى ${currentLevel} ${isHard ? '🔥 صعبة' : '🌱 سهلة'}`;
+            
+            if (soundEnabled && !musicInterval) startContinuousMusic();
+        }
+
+        // تبديل شكل الكؤوس الثلاثة
+        function changeCupStyle() {
+            currentCupStyleId = (currentCupStyleId % 3) + 1;
+            let names = {1: "الأباريق الملكية", 2: "الكؤوس الكلاسيكية", 3: "القوارير المخبرية"};
+            alert(`🎨 تم تغيير الواجهة إلى: ${names[currentCupStyleId]}`);
+            renderCups();
         }
 
         function renderCups() {
@@ -459,7 +537,7 @@
             grid.innerHTML = '';
             cupsData.forEach((cup, index) => {
                 const cupEl = document.createElement('div');
-                cupEl.className = `cup ${selectedCupIndex === index ? 'selected' : ''}`;
+                cupEl.className = `cup style-${currentCupStyleId} ${selectedCupIndex === index ? 'selected' : ''}`;
                 cupEl.onclick = () => selectCup(index);
 
                 cup.forEach(color => {
@@ -493,17 +571,14 @@
             let toCup = cupsData[to];
 
             if (fromCup.length === 0) return;
-            
             let colorToMove = fromCup[fromCup.length - 1];
             
             if (toCup.length === 0 || (toCup[toCup.length - 1] === colorToMove && toCup.length < 4)) {
                 fromCup.pop();
                 toCup.push(colorToMove);
-                playSound('pour');
                 checkWin();
             } else {
-                // خطأ في الحركة -> عرض إعلان للحصول على كأس فارغ مساعد
-                showAdModal("حركة خاطئة! شاهد إعلان للحصول على كأس فارغ إضافي ومتابعة اللعب.", () => {
+                showAdModal("حركة خاطئة! مشاهدة إعلان قصير تمنحك كأس فارغ إضافي للمساعدة.", () => {
                     cupsData.push([]);
                     renderCups();
                 });
@@ -518,19 +593,18 @@
         }
 
         function triggerWinEffects() {
-            playSound('win');
             let earned = 0.001;
             balance += earned;
             if (balance > targetBalance) balance = targetBalance;
             updateWalletUI();
 
-            document.getElementById('rewardText').innerText = `$${earned.toFixed(3)}`;
+            document.getElementById('rewardText').innerText = `+$${earned.toFixed(3)}`;
             document.getElementById('winModal').classList.add('active');
 
-            // إعلان إجباري كل 5 مستويات
+            // إعلان كل 5 مستويات
             if (currentLevel % 5 === 0) {
                 setTimeout(() => {
-                    alert("📢 إعلان ممول بين المستويات (5 مستويات مكتملة)!");
+                    alert("📢 إعلان ممول بين المستويات (أكملت 5 مستويات بنجاح)!");
                 }, 400);
             }
         }
@@ -546,6 +620,7 @@
             initLevel();
         }
 
+        // إعلانات افتراضية
         function showAdModal(text, callback) {
             document.getElementById('adDescription').innerText = text;
             adCallback = callback;
@@ -558,7 +633,7 @@
         }
 
         function watchAd() {
-            alert("▶️ جاري تشغيل إعلان الفيديو التفاعلي...");
+            alert("▶️ جاري تشغيل إعلان الفيديو الافتراضي...");
             if (adCallback) adCallback();
             closeAdModal();
         }
@@ -572,6 +647,7 @@
             initLevel();
         }
 
+        // محفظة الأرباح وسريط التقدم الأخضر
         updateWalletUI();
 
         function updateWalletUI() {
@@ -598,20 +674,49 @@
         function requestWithdraw() {
             let account = document.getElementById('walletAccount').value;
             if (!account) {
-                alert("الرجاء إدخال البريد أو رقم المحفظة بشكل صحيح!");
+                alert("الرجاء إدخال تفاصيل الحساب أو المحفظة!");
                 return;
             }
             if (balance < targetBalance) {
                 alert(`عذراً، رصيدك الحالي ($${balance.toFixed(3)}) لم يبلغ حد السحب الأدنى ($50.00)`);
             } else {
-                alert(`🎉 تم إرسال طلب السحب بنجاح عبر ${selectedPaymentMethod} إلى: ${account}`);
+                alert(`🎉 تم إرسال طلب السحب بنجاح عبر ${selectedPaymentMethod} إلى الحساب: ${account}`);
                 balance = 0;
                 updateWalletUI();
                 closeWalletModal();
             }
         }
 
-        // بدء اللعبة
+        // خدمة العملاء الذكية (الذكاء الاصطناعي)
+        function openAiHelpModal() {
+            document.getElementById('aiModal').classList.add('active');
+        }
+
+        function closeAiModal() {
+            document.getElementById('aiModal').classList.remove('active');
+        }
+
+        function askAiBot() {
+            let q = document.getElementById('aiQuestion').value;
+            let chatBox = document.getElementById('aiChatResponse');
+            if (!q) return;
+
+            chatBox.innerHTML += `<br><b>أنت:</b> ${q}`;
+            let reply = "أهلاً بك، يمكنك زيادة أرباحك الخضراء عبر انهاء المستويات (كل مستوى يمنح 0.001 دولار) ومضاعفتها بالإعلانات. حد السحب هو 50 دولار عبر USDT أو PayPal.";
+            if (q.includes("سحب") || q.includes("فلوس")) {
+                reply = "يمكنك السحب فوراً بمجرد وصول شريطك الأخضر إلى 50 دولار من نافذة المحفظة في الأعلى.";
+            } else if (q.includes("مستوى") || q.includes("صعبة")) {
+                reply = "اللعبة تحتوي على 300 مستوى تتدرج من السهولة إلى الصعوبة مع تغيير خلفيات الطبيعة تلقائياً.";
+            }
+
+            setTimeout(() => {
+                chatBox.innerHTML += `<br><b style="color:var(--success);">المساعد الذكي:</b> ${reply}`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+            document.getElementById('aiQuestion').value = '';
+        }
+
+        // تشغيل اللعبة لأول مرة
         initLevel();
     </script>
 </body>
